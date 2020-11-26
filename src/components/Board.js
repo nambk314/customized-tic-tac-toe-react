@@ -15,7 +15,7 @@ const Board = ({dimension, squares, onClick}) => {
     return (
         <div style = {style}>
             {squares.map((square, i) => ( 
-                <Square key={i} value = {i} onClick={onClick}/>
+                <Square key={i} value = {square} onClick={() => onClick(i)}/>
             ))}
         </div>
     )
