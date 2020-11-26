@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import Game from './components/Game'
+import React from 'react'
 
-function App() {
+const App = () => {
   return (
    <div>
-     <p>Tic tac toe</p>
+     <Game/>
    </div>
   );
 }
