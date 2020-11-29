@@ -3,10 +3,12 @@ import Square from './Square'
 
 
 
-const Board = ({dimension, squares, onClick}) => {
+const Board = ({squares, onClick}) => {
+    const dimension = Math.floor(Math.sqrt(squares.length))
+    const width = dimension*100
     const style = {
-        width: '250px',
-        height: '250px',
+        width: `${width}px`,
+        height: `${width}px`,
         margin: '10px 10px',
         display: 'grid',
         gridTemplate: `repeat(${dimension}, 1fr) / repeat(${dimension}, 1fr)`

@@ -5,7 +5,8 @@ import Board from './Board'
 
 
 const Game = () => {
-    const [dimension, setDimension] = useState(3)
+    const DEFAULT_DIMENSION = 3;
+    const [dimension, setDimension] = useState(DEFAULT_DIMENSION)
     const [board, setBoard] = useState(Array(dimension*dimension).fill(null))
     const [xIsNext, setXIsNext] = useState(true)
 
@@ -18,7 +19,6 @@ const Game = () => {
     }
 
     const handleInput = (event) => {
-        event.preventDefault()
         setDimension(event.target.value)
     }
 
@@ -34,14 +34,23 @@ const Game = () => {
                 <button onClick={handleSubmit}>Reset</button>
                 <h2 style = {{margin: '4px 4px'}}>Choose dimension</h2>
                 <form onSubmit={handleSubmit}>
-                    <input 
-                        type = 'text'
+                    <label>Board Size: </label>
+                    <select
                         value = {dimension}
-                        name = 'dimension'
-                        placeholder = 'Enter dimension'
-                        onChange = {handleInput}
+                        onChange={handleInput}
+                        name="boardSize"
                     >
-                    </input>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+
+                    </select>
                     <button>Change</button>
                 </form>
             </div>
@@ -49,7 +58,7 @@ const Game = () => {
     }
     return (
         <div>
-            <Board dimension={dimension} squares={board} onClick={handleClick}/>
+            <Board squares={board} onClick={handleClick}/>
             {menu()}
         </div>
         
