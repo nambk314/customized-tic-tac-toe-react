@@ -15,7 +15,7 @@ const Game = () => {
 
     useEffect(() => {
         setWinner(calculate(curMove, board, win, xIsNext))
-    }, [curMove, win]);
+    }, [curMove]);
 
     const handleClick = (i) => {
         let newBoard = [...board]
@@ -79,20 +79,18 @@ const Game = () => {
                     <button>Change</button>
                 </form>
 
-                <form onSubmit={handleWinCond}>
-                    <label>Play to: </label>
-                    <select
-                        value = {win}
-                        onChange={handleInput}
-                        name="winCond"
-                    >
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                <label>Play to: </label>
+                <select
+                    value = {win}
+                    onChange={handleInput}
+                    name="winCond"
+                >
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
 
-                    </select>
-                    <button>Set</button>
-                </form>
+                </select>
+
             </div>
         )
     }
