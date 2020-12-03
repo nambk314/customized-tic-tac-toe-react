@@ -1,39 +1,64 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Board from './Board'
-
+import {calculate} from '../helpers'
 
 
 
 const Game = () => {
-    const DEFAULT_DIMENSION = 3;
-    const [dimension, setDimension] = useState(DEFAULT_DIMENSION)
+    const DEFAULT_VALUE = 3;
+    const [dimension, setDimension] = useState(DEFAULT_VALUE)
     const [board, setBoard] = useState(Array(dimension*dimension).fill(null))
     const [xIsNext, setXIsNext] = useState(true)
+    const [win, setWin] = useState(DEFAULT_VALUE)
+    const [winner, setWinner] = useState(0)
+    const [curMove, setMove] = useState(null)
+
+    useEffect(() => {
+        setWinner(calculate(curMove, board, win, xIsNext))
+    }, [curMove, win]);
 
     const handleClick = (i) => {
         let newBoard = [...board]
         let x = xIsNext
         newBoard[i] =  x ? 'X' : 'O'
+        setMove(i)
         setBoard(newBoard)
         setXIsNext(!x)
     }
 
     const handleInput = (event) => {
-        setDimension(event.target.value)
+        const { value, name } = event.target
+        name === "boardSize" ? setDimension(event.target.value) : setWin(event.target.value)
     }
 
-    const handleSubmit = (event) => {
+    const handleBoardSize = (event) => {
         event.preventDefault()
         setBoard(Array(dimension*dimension).fill(null))
+        //Need to set other variable to default too
+        setWinner(0)
+        setMove(null)
+        setXIsNext(true)
+    }
+
+    const handleWinCond = (event) => {
+        event.preventDefault()
+        setWin(event.target.value)
+        setBoard(Array(dimension*dimension).fill(null))
+        //Need to set other variable to default too
+        setWinner(0)
+        setMove(null)
+        setXIsNext(true)
+
     }
 
     //Dimension may be should be a drop down list
     const menu = () =>  {
         return (
             <div>
-                <button onClick={handleSubmit}>Reset</button>
-                <h2 style = {{margin: '4px 4px'}}>Choose dimension</h2>
-                <form onSubmit={handleSubmit}>
+                <p>{instruction()}</p>
+
+                <button onClick={handleBoardSize}>Reset</button>
+                <form onSubmit={handleBoardSize}>
                     <label>Board Size: </label>
                     <select
                         value = {dimension}
@@ -53,8 +78,31 @@ const Game = () => {
                     </select>
                     <button>Change</button>
                 </form>
+
+                <form onSubmit={handleWinCond}>
+                    <label>Play to: </label>
+                    <select
+                        value = {win}
+                        onChange={handleInput}
+                        name="winCond"
+                    >
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+
+                    </select>
+                    <button>Set</button>
+                </form>
             </div>
         )
+    }
+
+    const instruction = () => {
+        console.log(winner)
+        if(winner) {
+            return `${winner} is the winner`
+        }
+        return xIsNext ? "X is next" : "O is next"
     }
     return (
         <div>
