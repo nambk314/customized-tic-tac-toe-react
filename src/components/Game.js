@@ -5,6 +5,11 @@ import {calculate} from '../helpers'
 
 
 const Game = () => {
+    const style = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent:'center'
+    }
     const DEFAULT_VALUE = 3;
     const [dimension, setDimension] = useState(DEFAULT_VALUE)
     const [board, setBoard] = useState(Array(dimension*dimension).fill(null))
@@ -48,7 +53,6 @@ const Game = () => {
         setWinner(0)
         setMove(null)
         setXIsNext(true)
-
     }
 
     //Dimension may be should be a drop down list
@@ -98,12 +102,14 @@ const Game = () => {
     const instruction = () => {
         console.log(winner)
         if(winner) {
+            //We should alert something and stop any board actions
+            //Then we would allow user to restart the game
             return `${winner} is the winner`
         }
         return xIsNext ? "X is next" : "O is next"
     }
     return (
-        <div>
+        <div style = {style}>
             <Board squares={board} onClick={handleClick}/>
             {menu()}
         </div>
