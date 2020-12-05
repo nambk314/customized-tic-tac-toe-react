@@ -9,7 +9,6 @@ function expand(board, row, col, direction, res, index, curPlayer) {
         let incrementalX = incremental[0]
         let incrementalY = incremental[1]
         for (let i = row+incrementalX, j = col+incrementalY; i >= 0 && i < board.length && j >= 0 && j < board[0].length && board[i][j] === curPlayer; i+=incrementalX, j+=incrementalY) {
-            console.log("in here")
             res[index]++
         }
         
@@ -31,21 +30,17 @@ export function calculate(curMove, board, winCond, xIsNext) {
 
     var coorRow = Math.floor(curMove/width)
     var coorCol = curMove%width
-    console.log(coorRow + " " + coorCol)
     let player = xIsNext ? "O" : "X"
     let res = Array(4).fill(1)
-    console.log(player)
     for (let i = 0; i < directions.length; i++) {
         expand(TwoDBoard, coorRow, coorCol, directions[i], res, i, player)
     }
     
-    let winner = null;
-    console.log(res + " " + winCond)
+    let winner = 0;
     for (let i = 0; i < res.length; i++) {
         if (res[i] === Number(winCond)) {
             winner = player
         }
     }
-    console.log("winner: " + winner)
     return winner
 };

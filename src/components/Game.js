@@ -25,10 +25,13 @@ const Game = () => {
     const handleClick = (i) => {
         let newBoard = [...board]
         let x = xIsNext
-        newBoard[i] =  x ? 'X' : 'O'
-        setMove(i)
-        setBoard(newBoard)
-        setXIsNext(!x)
+        if (newBoard[i] == null && winner == 0) {
+            newBoard[i] =  x ? 'X' : 'O'
+            setMove(i)
+            setBoard(newBoard)
+            setXIsNext(!x)
+        }
+        
     }
 
     const handleInput = (event) => {
