@@ -62,9 +62,9 @@ const Game = () => {
     const menu = () =>  {
         return (
             <div>
-                <p>{instruction()}</p>
+                {instruction()}
 
-                <button onClick={handleBoardSize}>Reset</button>
+                <button onClick={handleBoardSize}>New Game</button>
                 <form onSubmit={handleBoardSize}>
                     <label>Board Size: </label>
                     <select
@@ -72,8 +72,6 @@ const Game = () => {
                         onChange={handleInput}
                         name="boardSize"
                     >
-                        <option value="1">1</option>
-                        <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
@@ -107,9 +105,14 @@ const Game = () => {
         if(winner) {
             //We should alert something and stop any board actions
             //Then we would allow user to restart the game
-            return `${winner} is the winner`
+
+            //Also cross the winning positions in RED
+            return (<div>
+                <p>{`${winner} is the winner`}</p>
+                <p>Start a new game</p>
+            </div>)
         }
-        return xIsNext ? "X is next" : "O is next"
+        return xIsNext ? (<p>"X is next"</p>) : (<p>"O is next"</p>)
     }
     return (
         <div style = {style}>
